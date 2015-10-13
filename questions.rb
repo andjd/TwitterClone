@@ -2,6 +2,8 @@ require 'singleton'
 require 'sqlite3'
 require_relative 'users'
 require_relative 'replies'
+require_relative 'follows'
+require_relative 'likes'
 
 class QuestionsDatabase < SQLite3::Database
 
@@ -20,6 +22,10 @@ class Question
     results.map {|result| Question.new(result)}
   end
 
+  def self.most_followed(n)
+    QuestionFollows.most_followed_questions(n)
+  end
+
   def self.find_by_id(id)
     self.all.each do |question|
       return question if question.id == id
@@ -33,6 +39,10 @@ class Question
       WHERE user_id = ?
     SQL
     results.map { |result| Question.new(result) }
+  end
+
+  def self.most_liked(n)
+    QLikes.most_liked_questions(n)
   end
 
 
@@ -52,4 +62,17 @@ class Question
   def replies
     Reply.find_by_question_id(id)
   end
+
+  def followers
+    QuestionFollows.followers_for_question_id(id)
+  end
+
+  def likers
+    QLikes.likers_for_question_id(id)
+  end
+
+  def num_likes
+    QLikes.num_likes_for_question_id(id)
+  end
+
 end
