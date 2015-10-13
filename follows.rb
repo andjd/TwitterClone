@@ -3,7 +3,7 @@ require_relative 'users'
 require_relative 'replies'
 require_relative 'likes'
 
-class QuestionFollows
+class QuestionFollow < ModelBase
   def self.followers_for_question_id(question_id)
     results = QuestionsDatabase.instance.execute(<<-SQL, question_id)
       SELECT users.*

@@ -2,7 +2,7 @@ require_relative 'questions'
 require_relative 'users'
 require_relative 'follows'
 require_relative 'likes'
-class Reply
+class Reply < ModelBase
 
   def self.find_by_id(id)
     results = QuestionsDatabase.instance.execute(<<-SQL, id)

@@ -3,7 +3,7 @@ require_relative 'replies'
 require_relative 'follows'
 require_relative 'likes'
 
-class User
+class User < ModelBase
 
   def self.find_by_id(id)
     results = QuestionsDatabase.instance.execute(<<-SQL, id)
@@ -45,11 +45,11 @@ class User
   end
 
   def followed_questions
-    QuestionFollows.followed_questions_for_user(id)
+    QuestionFollow.followed_questions_for_user(id)
   end
 
   def liked_questions
-    QLikes.liked_questions_for_user_id(id)
+    QuestionLike.liked_questions_for_user_id(id)
   end
 
   def average_karma
