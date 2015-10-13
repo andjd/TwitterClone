@@ -22,6 +22,14 @@ CREATE TABLE question_follows (
 
 );
 
+CREATE TABLE question_likes (
+  id INTEGER PRIMARY KEY,
+  question_id SMALLINT,
+  user_id SMALLINT,
+  FOREIGN KEY (question_id) REFERENCES questions(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 CREATE TABLE replies (
   id INTEGER PRIMARY KEY,
   body TEXT,
